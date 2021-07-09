@@ -26,6 +26,11 @@
     res.render('index.ejs')
   })
 
+  app.get('/cadastro-usuario', (req, res) => {
+    res.render('cadastro-usuario.ejs')
+  })
+
+
   app.post('/cadastrar', async (req, res) => {
     console.log(req.body)
     res.send(req.body)
