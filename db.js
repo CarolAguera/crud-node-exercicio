@@ -3,7 +3,7 @@ async function connect(){
       return global.connection;
 
   const mysql = require("mysql2/promise");
-  const connection = await mysql.createConnection("mysql://root:@localhost:3306/carolina_aguera");
+  const connection = await mysql.createConnection("mysql://root:gazin@172.17.0.2:3306/projectgazin");
   console.log("Conectou no MySQL!");
   global.connection = connection;
   return connection;
@@ -11,25 +11,25 @@ async function connect(){
 
 async function selectCustomers(){
   const conn = await connect();
-  const [rows] = await conn.query('SELECT * FROM cliente;');
+  const [rows] = await conn.query('SELECT * FROM usuario;');
   return rows;
 }
 
 async function insertCustomer(customer){
   const conn = await connect();
-  const sql = 'INSERT INTO cliente(nome,cpfcnpj,email,telefone,cep,endereco,numero,cidade,estado,status) VALUES (?,?,?,?,?,?,?,?,?,?);';
-  const values = [customer.nome, customer.cpfcnpj, customer.email,customer.telefone,customer.cep,customer.endereco,customer.numero,customer.cidade,customer.estado,customer.status];
+  const sql = 'INSERT INTO usuario(nome,sexo,idade,hobby,datanascimento) VALUES (?,?,?,?,?);';
+  const values = [customer.nome,customer.sexo,customer.idade,customer.hobby,customer.datanascimento ];
   return await conn.query(sql, values);
 }
 async function updateCustomer(id, customer){
   const conn = await connect();
-  const sql = 'UPDATE cliente SET nome=?,cpfcnpj=?,email=?,telefone=?,cep=?,endereco=?,numero=?,cidade=?,estado=?,status=? WHERE id=?';
-  const values = [customer.nome, customer.cpfcnpj, customer.email,customer.telefone,customer.cep,customer.endereco,customer.numero,customer.cidade,customer.estado,customer.status, id];
+  const sql = 'UPDATE usuario SET nome=?,sexo=?,idade=?,hobby=?,datanascimento=? WHERE id=?';
+  const values = [customer.nome, customer.sexo, customer.idade,customer.hobby,customer.datanascimento];
   return await conn.query(sql, values);
 }
 async function deleteCustomer(id){
   const conn = await connect();
-  const sql = 'DELETE FROM cliente where id=?;';
+  const sql = 'DELETE FROM usuario where id=?;';
   return await conn.query(sql, [id]);
 }
 
