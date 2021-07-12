@@ -7,32 +7,157 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta charset="UTF-8">
   <title>Projeto Gazin</title>
-  <link rel="stylesheet" href="css/bootstrap.min.css">
-  <link rel="stylesheet" href="index.css">
+  <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
+  <style>
+    .form-login {
+      margin-top: 5rem;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    h2 {
+      text-align: center;
+    }
+  </style>
 </head>
 
-<body>
-  <table class="table">
+<body style="background-color: #F2F2F2;" class="form-login">
+  <h2>Listar Usuário</h2>
+  <table class="table table-success table-striped container form-login">
     <thead>
       <tr>
         <th scope="col">#</th>
         <th scope="col">Nome</th>
         <th scope="col">Sexo</th>
         <th scope="col">Idade</th>
+        <th scope="col">Hobby</th>
+        <th scope="col">Data de Nascimento</th>
+        <th scope="col">Editar/Excluir</th>
       </tr>
     </thead>
     <tbody>
-      <% clientes.forEach(cliente => { %>
+      <% clientes.forEach(cliente=> { %>
         <tr>
-          <th scope="row"><%= cliente.id %></th>
-          <td><%= cliente.nome %></td>
-          <td><%= cliente.sexo %></td>
-          <td><%= cliente.idade %></td>
+          <th scope="row">
+            <%= cliente.id %>
+          </th>
+          <td>
+            <%= cliente.nome %>
+          </td>
+          <td>
+            <%= cliente.sexo %>
+          </td>
+          <td>
+            <%= cliente.idade %>
+          </td>
+          <td>
+            <%= cliente.hobby %>
+          </td>
+          <td>
+            <%= cliente.dataBrasileira %>
+          </td>
+          <td>
+            <button type="button" class="btn btn-warning" data-bs-toggle="modal"
+              data-bs-target="#exampleModal1<%= cliente.id %> ">
+              <img src="../img/edit.png" alt="" width="20rem" height="20rem">
+            </button>
+
+            <div class="modal fade" id="exampleModal1<%= cliente.id %>" tabindex="-1"
+              aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Alterar Usuário</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <form class="row g-3" action="/usuario/atualizar" method="POST">
+                      <input type="hidden" name="id" id="id " value="<%= cliente.id %>">
+                      <div class="col-md-12">
+                        <label class="form-label">Nome Completo</label>
+                        <input type="text" name="nome" class="form-control" value="<%= cliente.nome %>" id="nome">
+                      </div>
+                      <div class="col-md-6"">
+                          <label class=" form-label">Sexo</label>
+                        <input class="form-control" name="sexo" type="text" id="sexo" value="<%= cliente.sexo %>"
+                          size="60">
+                      </div>
+                      <div class="col-md-6"">
+                          <label class=" form-label">Idade</label>
+                        <input class="form-control" name="idade" type="number" value="<%= cliente.idade %>" id="idade"
+                          size="40">
+                      </div>
+                      <div class="col-md-6">
+                        <label class="form-label">Hobby</label>
+                        <input name="hobby" type="text" id="hobby" size="40" value="<%= cliente.hobby %>"
+                          class="form-control">
+                      </div>
+                      <div class="col-md-6">
+                        <label class="form-label">Data de Nascimento</label>
+                        <input name="datanascimento" type="date" id="datanascimento"
+                          value="<%= cliente.dataConvertida %>" class="form-control" />
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-success">Atualizar</button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal2<%= cliente.id %>">
+              <img src="../img/excluir.png" alt="" width="20rem" height="20rem">
+            </button>
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModal2<%= cliente.id %>" tabindex="-1" aria-labelledby="exampleModalLabel"
+              aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel2">Excluir</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    Tem certeza que quer excluir ?
+                  </div>
+                  <form action="/usuario/excluir" method="post">
+                    <div class="modal-footer">
+                      <input type="hidden" name="id" id="id " value="<%= cliente.id %>">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                      <button type="submit" class="btn btn-danger">Excluir</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </td>
         </tr>
-      <% }); %>
+
+        <% }); %>
+
     </tbody>
   </table>
-  <script src="js/bootstrap.min.js"></script>
+  <script src="../js/bootstrap.min.js"></script>
+  <script>
+
+    function date(datanascimento) {
+      let dataAtual = new Date(datanascimento);
+      let dia = dataAtual.getDate();
+      if (dia < 10) {
+        dia = '0' + dia;
+      }
+      let mes = dataAtual.getMonth() + 1;
+      if (mes < 10) {
+        mes = '0' + mes;
+      }
+      let ano = dataAtual.getFullYear();
+      document.getElementById('datanascimento').max = `${ano}-${mes}-${dia}`
+    }
+
+
+  </script>
 </body>
 
 </html>

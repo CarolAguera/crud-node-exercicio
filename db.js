@@ -18,13 +18,13 @@ async function selectCustomers(){
 async function insertCustomer(customer){
   const conn = await connect();
   const sql = 'INSERT INTO usuario(nome,sexo,idade,hobby,datanascimento) VALUES (?,?,?,?,?);';
-  const values = [customer.nome,customer.sexo,customer.idade,customer.hobby,customer.datanascimento ];
+  const values = [customer.nome,customer.sexo.toUpperCase(),customer.idade,customer.hobby,customer.datanascimento ];
   return await conn.query(sql, values);
 }
 async function updateCustomer(id, customer){
   const conn = await connect();
   const sql = 'UPDATE usuario SET nome=?,sexo=?,idade=?,hobby=?,datanascimento=? WHERE id=?';
-  const values = [customer.nome, customer.sexo, customer.idade,customer.hobby,customer.datanascimento];
+  const values = [customer.nome, customer.sexo, customer.idade,customer.hobby,customer.datanascimento,id];
   return await conn.query(sql, values);
 }
 async function deleteCustomer(id){
