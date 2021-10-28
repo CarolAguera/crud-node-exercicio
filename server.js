@@ -21,6 +21,8 @@ const { data } = require("jquery");
     let idade = req.body.idade
     let hobby = req.body.hobby
     let datanascimento = req.body.datanascimento
+
+    
     await db.insertCustomer({ nome: nome, sexo: sexo, idade: idade, hobby: hobby, datanascimento: datanascimento });
     res.redirect('/usuario/listar')
   })

@@ -28,11 +28,11 @@
                 <label class="form-label">Nome Completo</label>
                 <input type="text" name="nome" class="form-control" id="nome">
             </div>
-            <div class="col-md-6"">
+            <div class="col-md-6">
                 <label class="form-label">Sexo</label>
                 <input class="form-control" name="sexo" type="text" placeholder="Digite f ou m" id="sexo" size="60">
             </div>
-            <div class="col-md-6"">
+            <div class="col-md-6">
                 <label class="form-label">Idade</label>
                 <input class="form-control" name="idade" type="number" id="idade" size="40">
             </div>
@@ -49,6 +49,20 @@
             </div>
         </form>
     </div>
+    <script>
+        let dataAtual = new Date();
+        let dia = dataAtual.getDate();
+        if (dia < 10) {
+            dia = '0' + dia;
+        }
+        let mes = dataAtual.getMonth() + 1;
+        if (mes < 10) {
+            mes = '0' + mes;
+        }
+        let ano = dataAtual.getFullYear();
+        document.getElementById('datanascimento').max = `${ano}-${mes}-${dia}`
+
+    </script>
     <script src="js/bootstrap.min.js"></script>
 </body>
 
