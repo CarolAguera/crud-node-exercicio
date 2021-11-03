@@ -27,7 +27,7 @@
       <h2>Buscar Usuário</h2>
     </div>
     <div class="col-sm-6">
-      <form action="/usuario/listar" method="GET">
+      <form action="/developers" method="GET">
         <div class="input-group ">
           <input type="text" class="form-control" placeholder="Pesquisar por Nome de Usuário" name="search">
           <button class="btn btn-primary" type="submit">Buscar</button>
@@ -88,7 +88,7 @@
                       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                      <form class="row g-3" action="/usuario/atualizar" method="POST">
+                      <form class="row g-3" action="/developers/<%= cliente.id %>" method="POST">
                         <input type="hidden" name="id" id="id " value="<%= cliente.id %>">
                         <div class="col-md-12">
                           <label class="form-label">Nome Completo</label>

@@ -15,7 +15,7 @@ const { data } = require("jquery");
   })
 
 
-  app.post('/usuario/cadastrar', async (req, res) => {
+  app.post('/developers', async (req, res) => {
     let nome = req.body.nome
     let sexo = req.body.sexo
     let idade = req.body.idade
@@ -24,10 +24,10 @@ const { data } = require("jquery");
 
     
     await db.insertCustomer({ nome: nome, sexo: sexo, idade: idade, hobby: hobby, datanascimento: datanascimento });
-    res.redirect('/usuario/listar')
+    res.redirect('/developers')
   })
 
-  app.get('/usuario/listar', async (req, res) => {
+  app.get('/developers', async (req, res) => {
     let clientes = [];
     if (req.query.search != undefined) {
       clientes = await db.selectSearchCustomers(req.query.search);
@@ -56,7 +56,7 @@ const { data } = require("jquery");
   })
 
 
-  app.post('/usuario/atualizar', async (req, res) => {
+  app.put('/developers/:id', async (req, res) => {
     let id = req.body.id
     let nome = req.body.nome
     let sexo = req.body.sexo
@@ -64,13 +64,13 @@ const { data } = require("jquery");
     let hobby = req.body.hobby
     let datanascimento = req.body.datanascimento
     await db.updateCustomer(id, { nome: nome, sexo: sexo, idade: idade, hobby: hobby, datanascimento: datanascimento });
-    res.redirect('/usuario/listar')
+    res.redirect('/developers')
   });
 
-  app.post('/usuario/excluir', async (req, res) => {
+  app.delete('/developers/:id', async (req, res) => {
     let id = req.body.id
     await db.deleteCustomer(id);
-    res.redirect('/usuario/listar')
+    res.redirect('/developers')
   });
 
 
